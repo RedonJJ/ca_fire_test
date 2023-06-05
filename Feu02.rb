@@ -85,4 +85,5 @@ shape = read_shape(shape_file)
 
 result = find_shape(board, shape)
 print_result(result, board)
+
 # Fin de l'exercice.
