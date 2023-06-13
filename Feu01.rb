@@ -5,6 +5,7 @@
 # “*” la multiplication, “/” la division et “%” le modulo.
 
 class ArithmeticExpression
+  # Méthode pour évaluer l'expression arithmétique donnée.
     def evaluate(expression)
         tokens = tokenize(expression)
         result = parse_expression(tokens)
@@ -12,46 +13,49 @@ class ArithmeticExpression
         result 
     end
   
+    # Méthode pour analyser l'expression arithmétique.
     def parse_expression(tokens)
-        result = parse_term(tokens)
+        result = parse_term(tokens) 
         while tokens.first == '+' || tokens.first == '-'
         operator = tokens.shift
-        right = parse_term(tokens)
+        right = parse_term(tokens) 
         if operator == '+' then
-          result += right
+          result += right # Éffectue l'addition.
         else 
-          result -= right
+          result -= right # Éffectue la soustraction.
         end
       end
       result
   end
 
+# Méthode pour analyser un terme dans l'expression.
 def parse_term(tokens)
   result = parse_factor(tokens)
 while tokens.first == '*' || tokens.first == '/' || tokens.first == '%'
   operator = tokens.shift
   right = parse_factor(tokens)
   if operator == '*' then
-  result *= right
-  elsif operator == '/' then
-  result /= right
+  result *= right # Éffectue la multiplication.
+ elsif operator == '/' then
+  result /= right # Éffectue la division.
   elsif operator == '%' then
-  result %= right
+  result %= right # Éffectue le modulo.
   end
 end
   result 
 end
 
+# Méthode pour analyser un facteur dans l'expression.
 def parse_factor(tokens)
   if tokens.first == '(' then
-      tokens.shift
+      tokens.shift 
       result = parse_expression(tokens)
       raise "Expected ')'" if tokens.shift != ')'
       result
-    elsif tokens.first =~ /\A[+-]?\d+\z/ then
+    elsif tokens.first =~ /\A[+-]?\d+\z/ then # Si le premier caractère est un nombre (positif ou négatif).
       tokens.shift.to_i
     else 
-      raise "Unexpected token: #{tokens.first}"
+      raise "Unexpected token: #{tokens.first}" # Lève une exception si le caractère n'est ni une paranthèse ouvrante ni un nombre.
     end
   end
 

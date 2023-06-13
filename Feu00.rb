@@ -3,7 +3,7 @@
 width = ARGV[0].to_i
 height = ARGV[1].to_i
 
-# Méthode
+# Méthode pour dessiner une ligne du rectangle.
 def draw_line(width, is_top_or_bottom)
     if width == 1 then
         puts 'o'
@@ -14,13 +14,13 @@ def draw_line(width, is_top_or_bottom)
     end
 end
 
-# Erreur
+# Gestion des erreurs.
 if width.zero? || height.zero? then
     puts 'Erreur'
     exit
 end
 
-# Affichage du rectangle
+# Affichage du rectangle.
 height.times do |i|
     if i.zero? || i == height - 1 then
         draw_line(width, true)
@@ -28,4 +28,5 @@ height.times do |i|
         draw_line(width, false)
     end
 end
+
 # Fin de l'exercice

@@ -25,6 +25,8 @@
 # 761235894
 
 # Afficher error et quitter le programme en cas de problèmes d’arguments.
+
+# Méthode pour lire le contenu du sudoku à partir d'un fichier.
 def read_sudoku(filename)
   sudoku = []
   File.foreach(filename) do |line|
@@ -33,10 +35,12 @@ def read_sudoku(filename)
   sudoku
 end
 
+# Méthode pour résoudre le Sudoku.
 def solve_sudoku(sudoku)
   solve_cell(0, 0, sudoku)
 end
 
+# Méthode récursive pour résoudre une cellule du Sudoku.
 def solve_cell(row, col, sudoku)
   return true if row == 9
 
@@ -54,10 +58,11 @@ def solve_cell(row, col, sudoku)
     end
   end
 
-  false
+  false # Aucune solution trouvée pour cette configuration.
 end
 
-def valid_placementrow, col, num, sudoku)
+# Méthode pour vérifier si le placement d'un numéro est valide dans la ligne, la colone, est la case.
+def valid_placementrow(row, col, num, sudoku)
   return false if num_in_row?(row, num, sudoku)
   return false if num_in_col?(col, num, sudoku)
   return false if num_in_box?(row, col, num, sudoku)
@@ -65,14 +70,17 @@ def valid_placementrow, col, num, sudoku)
   true
 end
 
+# Méthode pour vérifier si le numéro est déjà présent dans la ligne.
 def num_in_row?(row, num, sudoku)
   sudoku[row].include?(num)
 end
 
+# Méthode pour vérifier si le numéro est déjà présent dans la colonne.
 def num_in_col?(col, num, sudoku)
   sudoku.transpose[col].include?(num)
 end
 
+# Méthode pour vérifier si le numéro est déjà présent dans la boite 3x3.
 def num_in_box?(row, col, num, sudoku)
   box_start_row = (row / 3) * 3
   box_start_col = (col / 3) * 3
@@ -85,17 +93,19 @@ def num_in_box?(row, col, num, sudoku)
   false
 end
 
+# Méthode pour passer à la cellule suivante dans le Sudoku.
 def next_cell(row, col)
   col == 8 ? [row + 1, 0] : [row, col + 1]
 end
 
+# Méthode pour afficher le Sudoku.
 def print_sudoku(sudoku)
   sudoku.each do |row|
     puts row.join
   end
 end
 
-# Gestion des erreurs
+# Gestion des erreurs.
 if ARGV.length != 1
   puts 'Erreur: nombre incorrect d\'arguments.'
   puts "Utilisation: ruby #{__FILE__} sudoku_file"

@@ -35,17 +35,13 @@
 
 # Vous trouverez un générateur de plateau en dessous.
 # Voici un générateur de plateau écrit en Ruby :
-
-if ARGV.count != 4
-    puts "params needed: x y density map.file"
-    exit
-end
   
 x = ARGV[0].to_i
 y = ARGV[1].to_i
 density = ARGV[2].to_i
 output_file = ARGV[3]
   
+# Génère et enregistre une nouvelle carte aléatoire dans le fichier de sortie.
 File.open(output_file, "w") do |file|
     file.puts "#{y}.xo"
     for i in 0..y do
@@ -56,6 +52,7 @@ File.open(output_file, "w") do |file|
     end
 end
 
+# Méthode pour lire la carte à partir d'un fichier.
 def read_map(filename)
     lines = File.readlines(filename, chomp: true)
     line_length = lines[1].length
@@ -67,6 +64,7 @@ def read_map(filename)
     [lines, lines[1]]
 end  
 
+# Méthode pour remplacer les caractères vides par des caractères pleins dans la carte.
 def replace_empty_with_full(lines, empty_char, full_char)
     max_square_row, max_square_col, max_square_size = find_largest_square(lines, empty_char)
 
@@ -89,6 +87,7 @@ def replace_empty_with_full(lines, empty_char, full_char)
     map.each { |line| puts line.join }
 end
 
+# Méthode pour trouver le plus grand carré rempli de caractères vides.
 def find_largest_square(lines, empty_char)
     map = lines.map(&:chars)
     max_square_size = 0
@@ -128,17 +127,18 @@ def find_largest_square(lines, empty_char)
         end
     end
 
-    [max_square_row, max_square_col, max_square_size]
+    [max_square_row, max_square_col, max_square_size] # Retourne les coordonnées et la taille du plus grand carré rempli de caractères vides.
 end
 
+# Gestions des erreurs.
 if ARGV.length != 4 then
     puts 'Erreur: nombre incorrect d\'arguments.'
     puts "Utilisation: ruby #{__FILE__} x y density map.file"
     exit
 end
-  
+
 map_file = ARGV[3]
-lines, first_line = read_map(map_file)
+lines, first_line = read_map(map_file) # Lit la carte à partir du fichier.
   
 empty_char = first_line[1]
 full_char = first_line[2]
